@@ -75,20 +75,20 @@ NAME-OR-LAMBDA can be either:
     ;; args are in json format
     (let ((cb (ppcre:split ":" (second ml) :limit 2)))
       (destructuring-bind (_ cb-name cb-args) cb
-	(declare (ignore _))
-	(when *verbose-output*
+        (declare (ignore _))
+        (when clog-connection::*verbose-output*
           (format t "Connection ~A    Callback = ~A    Args = ~A~%"
                   connection-id cb-name cb-args))
-	(bordeaux-threads:make-thread
-	 (lambda ()
+        (bordeaux-threads:make-thread
+         (lambda ()
            (if clog-connection:*break-on-error*
                (handle-callback cb-name (json:decode-json-from-string cb-args))
                (handler-case
                    (handle-callback cb-name (json:decode-json-from-string cb-args))
-		 (t (c)
+                 (t (c)
                    (format t "Condition caught in handle-message for callback - ~A.~&" cb-name)
                    (values 0 c)))))
-	 :name (format nil "CLOG callack handler ~A" cb-name))))
+         :name (format nil "CLOG callack handler ~A" cb-name))))
     t))
 
 (pushnew 'clog-message-handler clog-connection::*message-handlers*)
