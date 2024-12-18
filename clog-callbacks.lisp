@@ -73,8 +73,8 @@ NAME-OR-LAMBDA can be either:
     ;; a callback
     ;; message format: 'C:name:args'
     ;; args are in json format
-    (let ((ml (ppcre:split ":" (second ml) :limit 2)))
-      (destructuring-bind (_ cb-name cb-args) ml
+    (let ((cb (ppcre:split ":" (second ml) :limit 2)))
+      (destructuring-bind (_ cb-name cb-args) cb
 	(declare (ignore _))
 	(when *verbose-output*
           (format t "Connection ~A    Callback = ~A    Args = ~A~%"
