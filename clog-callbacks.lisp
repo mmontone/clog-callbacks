@@ -74,8 +74,7 @@ NAME-OR-LAMBDA can be either:
     ;; message format: 'C:name:args'
     ;; args are in json format
     (let ((cb (ppcre:split ":" (second ml) :limit 2)))
-      (destructuring-bind (_ cb-name cb-args) cb
-        (declare (ignore _))
+      (destructuring-bind (cb-name cb-args) cb
         (when clog-connection::*verbose-output*
           (format t "Connection ~A    Callback = ~A    Args = ~A~%"
                   connection-id cb-name cb-args))
